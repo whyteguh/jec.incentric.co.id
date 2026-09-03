@@ -177,6 +177,9 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
 .tiers em{font-style:normal;font-size:10.5px;color:rgba(234,242,255,.6);letter-spacing:.05em}
 .mini-rows{margin-top:auto;display:flex;flex-direction:column;gap:7px;padding-top:8px}
 .mini-rows div{display:flex;align-items:center;gap:9px;font-size:11.5px;color:var(--txt-dim)}
+.mini-rows a{display:flex;align-items:center;gap:9px;font-size:11.5px;text-decoration:none;
+  color:var(--yellow);font-weight:700;cursor:pointer}
+.mini-rows a:hover{text-decoration:underline}
 .mini-rows svg{width:13px;height:13px;color:var(--yellow);flex:none}
 .mini-rows b{color:#fff;font-weight:700}
 .widget.accent .w-rot{background:linear-gradient(145deg,rgba(255,209,74,.96),rgba(255,175,20,.9));
@@ -426,8 +429,10 @@ function extraHTML(w){
         <p><b>WhatsApp us</b><br>Scan to chat — 0812-4901-7400</p></div>`;
     case 'tiers': return `<div class="tiers"><span>In-House Training</span><span class="hot">6-Mo</span><span>12-Mo</span><em>&larr; most popular</em></div>`;
     case 'files': return `<div class="mini-rows">
-        <div><i data-lucide="file-text"></i><span><b>E-Program Brochure</b> · PDF</span></div>
-        <div><i data-lucide="file-text"></i><span><b>Product Catalog</b> · PDF</span></div></div>`;
+        <a href="https://canva.link/5cqus2kx4otn97j" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+          <i data-lucide="external-link"></i><span><b>Booth Slides</b> &middot; Canva</span></a>
+        <div><i data-lucide="file-text"></i><span><b>E-Brochure</b> &middot; PDF</span></div>
+        <div><i data-lucide="file-text"></i><span><b>Product Catalog</b> &middot; PDF</span></div></div>`;
     case 'event': return `<div class="ev-poster"><img src="class.jpeg" alt="Founder Class"></div>`;
   }
   return '';
@@ -566,6 +571,7 @@ const MODALS = {
       <div><div class="m-eyebrow">07 · Materials</div><h2>Decks &amp; Files</h2></div></div>
     <p class="m-lead">Everything we present at this booth, ready to take home and share with your team.</p>
     <div class="m-sec">
+      <div class="m-row"><i data-lucide="presentation"></i><div><b>Booth Slides — Canva</b><p>Open the full deck we're presenting at the booth.</p></div><a class="act" href="https://canva.link/5cqus2kx4otn97j" target="_blank" rel="noopener"><i data-lucide="external-link"></i>Open</a></div>
       <div class="m-row"><i data-lucide="file-text"></i><div><b>E-Program-Incentric.pdf</b><p>Full CX mentoring &amp; training program overview.</p></div><button class="act" data-act="download" data-file="ebook-program%20incentric.pdf"><i data-lucide="download"></i>Download</button></div>
       <div class="m-row"><i data-lucide="file-text"></i><div><b>Incentric-Product.pdf</b><p>Product catalog and service breakdown.</p></div><button class="act" data-act="download" data-file="incentric%20product.pdf"><i data-lucide="download"></i>Download</button></div>
     </div>${mFoot()}`,
