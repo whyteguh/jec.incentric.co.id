@@ -282,6 +282,33 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
 .lp-input button:hover{transform:translateY(-2px)}
 .lp-input button:active{transform:scale(.92)}
 .lp-input button svg{width:18px;height:18px}
+
+
+/* ============ MOBILE (≤ 900px): hero + chat + download only ============ */
+@media (max-width: 900px){
+  .stage-wrap{display:block;overflow-y:auto;padding:0}
+  .stage{width:auto !important;height:auto !important;transform:none !important;
+    padding:16px 18px 32px}
+  .top{position:static;padding:8px 0 14px;flex-wrap:wrap;gap:10px}
+  .logo-img{height:34px}
+  .chips{justify-content:flex-start}
+  .chip{padding:8px 12px;font-size:11.5px}
+
+  .hero{position:static;width:100%;margin:10px 0 22px}
+  .eyebrow{font-size:10.5px;padding:7px 13px}
+  .hero h1{font-size:34px;line-height:1.12;margin:16px 0 14px}
+  .hero .sub{font-size:14px;max-width:none}
+  .hero-btns{margin-top:22px;flex-wrap:wrap;gap:10px}
+  .hero-btns .btn{padding:13px 20px;font-size:14px}
+  .hero-hints{display:none}
+
+  #widgets{display:none}
+
+  .lead-box{position:static !important;width:100% !important;height:auto !important;
+    margin-top:6px;min-height:300px;max-height:52vh;border-radius:20px}
+
+  .m-foot{flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
@@ -431,7 +458,11 @@ WIDGETS.forEach((w,i)=>{
 
 
 function fit(){
-  scale = Math.min(innerWidth/1560, innerHeight/880);
+  if(innerWidth <= 900){
+    stage.style.transform = 'none';
+    return;
+  }
+  scale = Math.min((innerWidth-28)/1560, (innerHeight-28)/880);
   stage.style.transform = `scale(${scale})`;
 }
 fit(); addEventListener('resize', ()=>{ fit(); });
@@ -660,7 +691,7 @@ window.addEventListener('load', ()=>{
 
 
 lucide.createIcons();
-if(innerWidth < 720) setTimeout(()=>toast('Best experienced on a large screen — designed for the booth monitor.','monitor'), 900);
+if(innerWidth <= 900) toast('Di HP: isi chat di bawah untuk terhubung. 👋','smartphone');
 
 
 /* ---------- Lead capture (chat-style → Google Sheets via Apps Script) ---------- */
