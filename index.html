@@ -1,0 +1,888 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incentric · JED 2026 Booth</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FFC531'/%3E%3Ccircle cx='32' cy='26' r='10' fill='none' stroke='%230A2470' stroke-width='5'/%3E%3Cpath d='M25 34 L20 50 L32 43 L44 50 L39 34' fill='%230A2470'/%3E%3C/svg%3E">
+
+
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+
+<style>
+/* ============ BASE ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Satoshi',ui-sans-serif,system-ui,sans-serif;
+  background:#06279C;color:#F4F8FF;
+  -webkit-font-smoothing:antialiased;
+}
+:root{
+  --yellow:#FFC531; --yellow-deep:#FFB01E;
+  --ink:#0A2470;
+  --glass:rgba(255,255,255,.13);
+  --line:rgba(255,255,255,.22);
+  --txt-dim:rgba(234,242,255,.78);
+}
+body.calm .blob,body.calm .w-in{animation-play-state:paused}
+
+
+/* ============ ABSTRACT BACKDROP ============ */
+.bg{position:fixed;inset:-8%;z-index:0;pointer-events:none;
+  background:linear-gradient(152deg,#041B7A 0%,#0A3BC8 36%,#1668E8 64%,#2F86EE 100%);
+}
+.blob{position:absolute;border-radius:50%;will-change:transform}
+.b1{width:62vw;height:62vw;right:-14%;bottom:-24%;
+  background:radial-gradient(circle,rgba(255,197,49,.88) 0%,rgba(255,197,49,0) 66%);
+  animation:drift1 34s ease-in-out infinite alternate}
+.b2{width:48vw;height:48vw;left:-12%;top:-18%;
+  background:radial-gradient(circle,rgba(214,236,255,.55) 0%,rgba(214,236,255,0) 65%);
+  animation:drift2 42s ease-in-out infinite alternate}
+.b3{width:44vw;height:44vw;left:22%;top:34%;
+  background:radial-gradient(circle,rgba(72,158,255,.55) 0%,rgba(72,158,255,0) 68%);
+  animation:drift3 30s ease-in-out infinite alternate}
+.b4{width:26vw;height:26vw;left:38%;top:-8%;
+  background:radial-gradient(circle,rgba(255,236,190,.5) 0%,rgba(255,236,190,0) 62%);
+  animation:drift2 37s ease-in-out infinite alternate-reverse}
+@keyframes drift1{from{transform:translate(0,0) scale(1)}to{transform:translate(-7vw,6vh) scale(1.14)}}
+@keyframes drift2{from{transform:translate(0,0) scale(1)}to{transform:translate(5vw,7vh) scale(1.1)}}
+@keyframes drift3{from{transform:translate(0,0) scale(1.05)}to{transform:translate(-6vw,-6vh) scale(.92)}}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(125% 125% at 50% 42%,transparent 52%,rgba(3,10,44,.42) 100%)}
+
+
+.grain{position:fixed;inset:0;z-index:500;pointer-events:none;opacity:.045;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+
+/* ============ STAGE ============ */
+.stage-wrap{position:fixed;inset:0;z-index:10;display:grid;place-items:center;overflow:hidden}
+.stage{position:relative;width:1560px;height:880px;transform-origin:center center}
+
+
+.grid-layer{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .35s;
+  background-image:
+    linear-gradient(rgba(255,255,255,.075) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.075) 1px,transparent 1px);
+  background-size:40px 40px}
+.stage.snap-drag .grid-layer{opacity:1}
+
+
+.guides{position:absolute;inset:0;z-index:220;pointer-events:none}
+.guides i{position:absolute;background:#FFD866;box-shadow:0 0 10px rgba(255,197,49,.75);border-radius:2px}
+.guides .v{top:6px;bottom:6px;width:1.5px}
+.guides .h{left:6px;right:6px;height:1.5px}
+
+
+/* ---------- Header ---------- */
+.top{position:absolute;top:0;left:0;right:0;padding:30px 56px 0;
+  display:flex;justify-content:space-between;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-img{height:44px;width:auto;display:block}
+.logo-mark{width:42px;height:42px;border-radius:13px;background:var(--yellow);
+  display:grid;place-items:center;color:var(--ink);
+  box-shadow:0 8px 24px rgba(255,197,49,.35),inset 0 1px 0 rgba(255,255,255,.6)}
+.logo-mark svg{width:21px;height:21px}
+.logo-name{font-family:'Clash Display';font-weight:600;font-size:23px;letter-spacing:-.02em;line-height:1}
+.logo-name small{display:block;font-family:'Satoshi';font-weight:500;font-size:10.5px;
+  letter-spacing:.22em;color:rgba(234,242,255,.6);margin-top:3px}
+.chips{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 15px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--line);
+  font-size:12.5px;font-weight:500;letter-spacing:.02em;color:var(--txt-dim);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28)}
+.chip svg{width:14px;height:14px;color:var(--yellow)}
+.chip b{color:#fff;font-weight:700}
+.chip.btn{cursor:pointer;transition:background .25s,transform .25s,color .25s,border-color .25s;color:#fff;padding:10px;justify-content:center}
+.chip.btn:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
+.chip.btn:active{transform:scale(.94)}
+.chip.btn.on{background:rgba(255,197,49,.16);border-color:rgba(255,197,49,.5);color:#FFD866}
+.chip.btn.on svg,.chip.btn.on b{color:var(--yellow)}
+
+
+/* ---------- Hero ---------- */
+.hero{position:absolute;left:56px;top:176px;width:524px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;
+  background:rgba(255,197,49,.14);border:1px solid rgba(255,197,49,.4);
+  font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--yellow);text-transform:uppercase}
+.hero h1{font-family:'Clash Display';font-weight:600;font-size:63px;line-height:1.03;
+  letter-spacing:-.02em;margin:22px 0 18px}
+.hero h1 em{font-style:normal;color:var(--yellow)}
+.hero .sub{font-size:15px;line-height:1.68;color:var(--txt-dim);max-width:452px}
+.hero-btns{display:flex;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:9px;border:none;cursor:pointer;
+  font-family:'Satoshi';font-weight:700;font-size:14px;border-radius:999px;
+  padding:14px 23px;transition:transform .25s,box-shadow .25s,background .25s}
+.btn svg{width:16px;height:16px}
+.btn:active{transform:scale(.96)}
+.btn-primary{background:var(--yellow);color:var(--ink);
+  box-shadow:0 10px 30px rgba(255,197,49,.4),inset 0 1px 0 rgba(255,255,255,.55)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(255,197,49,.5)}
+.btn-ghost{background:var(--glass);border:1px solid var(--line);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.btn-ghost:hover{background:rgba(255,255,255,.18);transform:translateY(-2px)}
+.hero-hints{margin-top:34px;font-size:10.5px;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(234,242,255,.5)}
+.hero-hints span{color:rgba(255,197,49,.8);margin:0 7px}
+
+
+/* ============ WIDGETS ============ */
+.widget{position:absolute;border-radius:26px;cursor:grab;user-select:none;-webkit-user-select:none;
+  touch-action:none;outline:none;
+  transition:transform .45s cubic-bezier(.22,1.4,.36,1)}
+.widget:hover{transform:translateY(-8px)}
+.widget:focus-visible{outline:2px solid var(--yellow);outline-offset:4px;border-radius:26px}
+.widget.drag{cursor:grabbing;transition:none}
+.w-in{position:absolute;inset:0;animation:bob var(--bob,7s) ease-in-out infinite;animation-delay:var(--bd,0s)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.w-rot{position:absolute;inset:0;border-radius:26px;overflow:hidden;
+  transform:rotate(var(--rot,var(--tilt,0deg))) scale(var(--s,1));
+  transition:transform .65s cubic-bezier(.2,1.5,.4,1),box-shadow .4s;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+    linear-gradient(140deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.11) 48%,rgba(160,200,255,.13) 100%);
+  box-shadow:0 18px 44px rgba(3,14,58,.38),inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 0 rgba(255,255,255,.07)}
+.widget.drag .w-rot{transition:none;--s:1.045;
+  box-shadow:0 40px 80px rgba(2,8,38,.55),inset 0 1px 0 rgba(255,255,255,.5)}
+.widget:hover .w-rot{--rot:0deg}
+.w-rot::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;z-index:3;pointer-events:none;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),
+    rgba(255,255,255,.95),rgba(255,255,255,.28) 42%,rgba(255,255,255,.05) 72%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude}
+.w-rot::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.13),transparent 58%)}
+.w-body{position:relative;z-index:2;padding:20px 22px;height:100%;display:flex;flex-direction:column}
+.w-head{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.w-ic{width:38px;height:38px;border-radius:12px;flex:none;display:grid;place-items:center;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+.w-ic svg{width:17px;height:17px}
+.w-meta{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(234,242,255,.6)}
+.w-body h3{font-family:'Clash Display';font-weight:600;font-size:21px;letter-spacing:-.01em}
+.w-body>p{font-size:12.5px;line-height:1.55;color:var(--txt-dim);margin-top:5px}
+
+
+.stats{display:flex;gap:0;margin-top:auto;padding-top:12px}
+.stats>div{flex:1;border-left:1px solid rgba(255,255,255,.2);padding-left:12px}
+.stats>div:first-child{border-left:none;padding-left:0}
+.stats b{display:block;font-family:'Clash Display';font-weight:600;font-size:24px;color:var(--yellow);line-height:1}
+.stats span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(234,242,255,.62)}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:12px}
+.tags span{font-size:11px;font-weight:500;padding:6px 12px;border-radius:999px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#EAF2FF}
+.metric{margin-top:auto;padding-top:8px}
+.fw-img{margin-top:auto;flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding-top:6px}
+.fw-img img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(0,0,0,.25))}
+.ev-poster{margin-top:auto;flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding-top:6px}
+.ev-poster img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:10px;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+.metric b{font-family:'Clash Display';font-weight:600;font-size:44px;line-height:1;color:var(--yellow);
+  text-shadow:0 4px 24px rgba(255,197,49,.3)}
+.metric span{display:block;font-size:11px;line-height:1.45;color:var(--txt-dim);margin-top:7px}
+.demo-btn{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:9px;
+  border:none;cursor:pointer;border-radius:999px;padding:12px 20px;
+  background:var(--ink);color:#DCE8FF;font-family:'Satoshi';font-weight:700;font-size:13.5px;
+  box-shadow:0 10px 26px rgba(6,18,70,.4);transition:transform .25s,box-shadow .25s}
+.demo-btn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(6,18,70,.5)}
+.demo-btn:active{transform:scale(.95)}
+.demo-btn svg{width:15px;height:15px}
+.qr-wrap{margin-top:auto;display:flex;align-items:center;gap:12px}
+.qr-box{width:88px;height:88px;flex:none;background:#fff;border-radius:14px;padding:7px;
+  box-shadow:0 8px 22px rgba(3,12,50,.35)}
+.qr-box img,.qr-box canvas{width:100%!important;height:100%!important;display:block}
+.qr-wrap p{font-size:11.5px;line-height:1.5;color:var(--txt-dim)}
+.qr-wrap p b{color:#fff}
+.tiers{display:flex;gap:8px;margin-top:auto;padding-top:10px;align-items:center;flex-wrap:wrap}
+.tiers span{font-size:11.5px;font-weight:700;padding:7px 14px;border-radius:999px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#EAF2FF}
+.tiers .hot{background:var(--yellow);border-color:transparent;color:var(--ink);
+  box-shadow:0 6px 18px rgba(255,197,49,.35)}
+.tiers em{font-style:normal;font-size:10.5px;color:rgba(234,242,255,.6);letter-spacing:.05em}
+.mini-rows{margin-top:auto;display:flex;flex-direction:column;gap:7px;padding-top:8px}
+.mini-rows div{display:flex;align-items:center;gap:9px;font-size:11.5px;color:var(--txt-dim)}
+.mini-rows svg{width:13px;height:13px;color:var(--yellow);flex:none}
+.mini-rows b{color:#fff;font-weight:700}
+.widget.accent .w-rot{background:linear-gradient(145deg,rgba(255,209,74,.96),rgba(255,175,20,.9));
+  box-shadow:0 22px 50px rgba(120,80,0,.35),inset 0 1px 0 rgba(255,255,255,.65)}
+.widget.accent .w-ic{background:rgba(10,36,112,.15);border-color:rgba(10,36,112,.25);color:var(--ink)}
+.widget.accent .w-meta{color:rgba(10,36,112,.65)}
+.widget.accent .w-body h3{color:var(--ink)}
+.widget.accent .w-body>p{color:rgba(10,36,112,.75)}
+
+
+/* ============ BOOTH TOUR ============ */
+#tourLayer{position:absolute;inset:0;z-index:140;pointer-events:none;opacity:0;transition:opacity .35s}
+#tourLayer.active{opacity:1}
+#spot{position:absolute;border-radius:32px;
+  box-shadow:0 0 0 2.5px rgba(255,199,54,.95),0 0 46px rgba(255,199,54,.3),0 0 0 9999px rgba(3,10,38,.58);
+  transition:all .55s cubic-bezier(.65,0,.25,1)}
+#tourCard{position:absolute;width:334px;pointer-events:auto;border-radius:22px;padding:21px 23px;
+  background:linear-gradient(150deg,rgba(24,52,130,.94),rgba(8,24,80,.96));
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 26px 60px rgba(2,8,36,.5),inset 0 1px 0 rgba(255,255,255,.3)}
+#tourCard.in{animation:cardIn .45s cubic-bezier(.2,1.3,.4,1)}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+#tourCard .t-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--yellow)}
+#tourCard h4{font-family:'Clash Display';font-weight:600;font-size:20px;margin:9px 0 7px}
+#tourCard p{font-size:12.5px;line-height:1.6;color:var(--txt-dim)}
+.t-bar{height:3px;border-radius:99px;background:rgba(255,255,255,.16);margin:15px 0 14px;overflow:hidden}
+.t-bar i{display:block;height:100%;background:var(--yellow);border-radius:99px;transition:width .45s ease}
+.t-foot{display:flex;justify-content:space-between;align-items:center}
+.t-next{display:inline-flex;align-items:center;gap:7px;border:none;cursor:pointer;border-radius:999px;
+  padding:10px 18px;background:var(--yellow);color:var(--ink);
+  font-family:'Satoshi';font-weight:700;font-size:12.5px;transition:transform .2s}
+.t-next:hover{transform:translateY(-1px)}
+.t-next svg{width:14px;height:14px}
+.t-quit{background:none;border:none;cursor:pointer;color:rgba(234,242,255,.6);
+  display:grid;place-items:center;width:32px;height:32px;border-radius:99px;transition:.2s}
+.t-quit:hover{background:rgba(255,255,255,.12);color:#fff}
+.t-quit svg{width:15px;height:15px}
+
+
+/* ============ MODAL ============ */
+.overlay{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:24px;
+  background:rgba(4,13,48,.6);
+  opacity:0;pointer-events:none;transition:opacity .3s}
+.overlay.open{opacity:1;pointer-events:auto}
+.modal{width:min(660px,94vw);max-height:82vh;overflow-y:auto;border-radius:28px;padding:30px 32px 26px;
+  background:linear-gradient(150deg,rgba(30,62,148,.95),rgba(9,26,86,.97));
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 40px 90px rgba(2,8,36,.6),inset 0 1px 0 rgba(255,255,255,.3);
+  transform:translateY(18px) scale(.96);transition:transform .5s cubic-bezier(.2,1.3,.4,1)}
+.overlay.open .modal{transform:none}
+.modal::-webkit-scrollbar{width:6px}
+.modal::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:99px}
+.m-head{display:flex;gap:15px;align-items:flex-start;margin-bottom:16px}
+.m-ic{width:46px;height:46px;flex:none;border-radius:14px;display:grid;place-items:center;
+  background:rgba(255,197,49,.16);border:1px solid rgba(255,197,49,.35);color:var(--yellow)}
+.m-ic svg{width:20px;height:20px}
+.m-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--yellow)}
+.m-head h2{font-family:'Clash Display';font-weight:600;font-size:27px;letter-spacing:-.01em;margin-top:4px}
+.m-lead{font-size:14.5px;line-height:1.7;color:rgba(236,243,255,.92);margin-bottom:8px}
+.m-sec{margin-top:14px}
+.m-row{display:flex;gap:14px;align-items:flex-start;padding:14px 2px;border-top:1px solid rgba(255,255,255,.13)}
+.m-row svg{width:18px;height:18px;color:var(--yellow);flex:none;margin-top:2px}
+.m-row b{display:block;font-size:14px;font-weight:700}
+.m-row p{font-size:12.5px;line-height:1.55;color:var(--txt-dim);margin-top:3px}
+.m-row .badge{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--yellow);color:var(--ink);border-radius:99px;padding:3px 9px;margin-left:8px;vertical-align:2px}
+.m-row .act{margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;
+  border-radius:999px;padding:8px 15px;font-family:'Satoshi';font-weight:700;font-size:12px;transition:.25s}
+.m-row .act:hover{background:rgba(255,255,255,.18)}
+.m-row .act svg{width:13px;height:13px;color:#fff;margin:0}
+.m-stats{display:flex;gap:0;margin:18px 0 6px}
+.m-stats>div{flex:1;border-left:1px solid rgba(255,255,255,.18);padding:2px 0 2px 16px}
+.m-stats>div:first-child{border-left:none;padding-left:0}
+.m-stats b{display:block;font-family:'Clash Display';font-weight:600;font-size:30px;color:var(--yellow)}
+.m-stats span{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(234,242,255,.6)}
+.m-time{font-family:'Clash Display';font-weight:600;font-size:19px;color:var(--yellow);flex:none;min-width:64px}
+.m-foot{display:flex;justify-content:flex-end;gap:11px;margin-top:24px}
+.m-foot .btn{padding:12px 20px;font-size:13px}
+
+
+/* ============ TOASTS ============ */
+.toasts{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:600;
+  display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none}
+.toast{display:flex;align-items:center;gap:11px;padding:12px 19px;border-radius:999px;
+  background:linear-gradient(150deg,rgba(28,58,140,.95),rgba(8,24,80,.97));
+  border:1px solid rgba(255,255,255,.22);box-shadow:0 16px 40px rgba(2,8,36,.5),inset 0 1px 0 rgba(255,255,255,.25);
+  font-size:13px;font-weight:500;color:#EAF2FF;
+  opacity:0;transform:translateY(14px) scale(.95);transition:all .4s cubic-bezier(.2,1.3,.4,1)}
+.toast.show{opacity:1;transform:none}
+.toast svg{width:16px;height:16px;color:var(--yellow);flex:none}
+
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="bg" id="bg">
+  <div class="blob b1" data-depth="26"></div>
+  <div class="blob b2" data-depth="14"></div>
+  <div class="blob b3" data-depth="20"></div>
+  <div class="blob b4" data-depth="10"></div>
+</div>
+<div class="vignette"></div>
+
+
+<div class="stage-wrap">
+  <main class="stage" id="stage">
+
+
+    <header class="top">
+      <div class="logo">
+        <img src="logo white no tagline.png" alt="Incentric" class="logo-img">
+      </div>
+      <div class="chips">
+        <span class="chip"><i data-lucide="calendar-days"></i>3–6 Sep 2026 · JICC Jakarta</span>
+        <span class="chip"><i data-lucide="timer"></i><b id="dcount">T-—</b></span>
+        <span class="chip"><i data-lucide="clock"></i><b id="clock">--:--:--</b>&nbsp;WIB</span>
+        <button class="chip btn" id="snapBtn" title="Toggle snapping (S)" aria-pressed="true">
+          <i data-lucide="magnet"></i></button>
+        <button class="chip btn" id="fxBtn" title="Ambient motion — turn off to keep the laptop cool">
+          <i data-lucide="fan"></i></button>
+        <button class="chip btn" id="resetBtn" title="Restore default layout"><i data-lucide="rotate-ccw"></i></button>
+      </div>
+    </header>
+
+
+    <section class="hero">
+      <span class="eyebrow">JED 2026 · Booth 0118</span>
+      <h1>Grow your customer experience<br>with <em>Incentric</em>.</h1>
+      <p class="sub">Incentric has been delivering Customer Experience Management since 2023 — a strategic approach that ensures every customer interaction becomes a memorable moment, turning them into loyal advocates.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" id="heroTour"><i data-lucide="play"></i>Start booth tour</button>
+        <button class="btn btn-ghost" data-act="download"><i data-lucide="folder-down"></i>E-Brochure</button>
+      </div>
+      <p class="hero-hints">Drag to arrange <span>·</span> S to snap <span>·</span> Esc to close</p>
+    </section>
+
+
+    <div class="grid-layer" id="gridLayer"></div>
+    <div id="widgets"></div>
+    <div class="guides" id="guides"></div>
+
+
+    <div id="tourLayer">
+      <div id="spot"></div>
+      <div id="tourCard"></div>
+    </div>
+
+
+  </main>
+</div>
+
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal" role="dialog" aria-modal="true"></div>
+</div>
+
+
+<div class="toasts" id="toasts"></div>
+<div class="grain"></div>
+
+
+<script>
+const EVENT_DATE = new Date('2026-09-03T09:00:00+07:00');
+const SITE_URL   = 'https://incentric.co.id';
+const WA_URL     = 'https://wa.me/6281249017400';
+const GRID       = 40;
+const IDLE_MS    = 90000;
+
+
+const WIDGETS = [
+  {id:'about',       no:'01', tag:'Profile',     icon:'building-2',     title:'About Incentric',     short:'Customer Experience Management since 2023 — turning every interaction into a memorable moment.', x:620, y:120, w:400, h:250, tilt:-0.8, extra:'stats'},
+  {id:'products',    no:'02', tag:'Solutions',   icon:'layers',         title:'Products & Solutions',short:'Four service lines — from CX mentoring to in-house training.', x:1052, y:120, w:448, h:250, tilt:0.5, extra:'chips',
+    chips:['CRM Architecture','Employee Engagement','Service Experience','Sprint Productivity']},
+  {id:'framework',   no:'03', tag:'Framework',  icon:'infinity',       title:'WOW Experience Loop', short:'Our signature framework.', x:620, y:400, w:360, h:260, tilt:0.7, extra:'fw'},
+  {id:'tour',        no:'04', tag:'Interactive', icon:'sparkles',       title:'Booth Tour',          short:'Let me guide your pitch — the story flow, step by step.', x:1000, y:402, w:338, h:232, tilt:-0.6, extra:'cta', accent:true},
+  {id:'contact',     no:'05', tag:'Contact',     icon:'qr-code',        title:'Contact & QR',        short:'Scan to chat on WhatsApp — 0812-4901-7400.', x:1340, y:402, w:210, h:232, tilt:0.9, extra:'qr'},
+  {id:'partnership', no:'06', tag:'Partnership', icon:'handshake',      title:'Partnership Tiers',   short:'Three ways to work together — sized to your program.', x:620, y:666, w:392, h:168, tilt:-0.5, extra:'tiers'},
+  {id:'materials',   no:'07', tag:'Materials',   icon:'folder-down',    title:'Decks & Files',       short:'Take our story home with you.', x:1042, y:666, w:220, h:168, tilt:0.6, extra:'files'},
+  {id:'event',       no:'08', tag:'Event',      icon:'calendar-clock', title:'Founder Class',      short:'5 Sep · 10:00–12:00 · Arisdiansah, Founder.', x:1292, y:666, w:208, h:168, tilt:-0.9, extra:'event'},
+];
+
+
+const TOUR = [
+  {id:'about',       t:'Start with the story',        d:'Open with the short profile. The numbers on this card are usually enough to break the ice.'},
+  {id:'products',    t:'Show the solutions',          d:'Four service lines — CRM, Employee Engagement, Service Experience, and Sprint Productivity System.'},
+  {id:'framework',   t:'Introduce the framework',     d:'The WOW Experience Loop is what makes your CX programs consistent and repeatable.'},
+  {id:'partnership', t:'Talk partnership',            d:'Three ways to work together: in-house training, 6-month, or 12-month mentoring.'},
+  {id:'materials',   t:'Give them something to take', d:'The program brochure and product catalog are ready to download for follow-up.'},
+  {id:'contact',     t:'Close with contact',          d:'Ask visitors to scan the QR — straight to WhatsApp, so today\u2019s conversation continues tomorrow.'},
+];
+
+
+function extraHTML(w){
+  switch(w.extra){
+    case 'stats': return `<div class="stats">
+        <div><b>3+</b><span>Years</span></div>
+        <div><b>50+</b><span>Clients</span></div>
+        <div><b>4</b><span>Programs</span></div></div>`;
+    case 'chips': return `<div class="tags">${w.chips.map(c=>`<span>${c}</span>`).join('')}</div>`;
+    case 'metric': return `<div class="metric"><b>${w.metric}</b><span>${w.mLabel}</span></div>`;
+    case 'fw': return `<div class="fw-img"><img src="wow experience loop.png" alt="WOW Experience Loop framework"></div>`;
+    case 'cta': return `<button class="demo-btn" data-tour><i data-lucide="play"></i>Play booth tour</button>`;
+    case 'qr': return `<div class="qr-wrap"><div class="qr-box" id="qrbox"></div>
+        <p><b>WhatsApp us</b><br>Scan to chat — 0812-4901-7400</p></div>`;
+    case 'tiers': return `<div class="tiers"><span>In-House Training</span><span class="hot">6-Mo</span><span>12-Mo</span><em>&larr; most popular</em></div>`;
+    case 'files': return `<div class="mini-rows">
+        <div><i data-lucide="file-text"></i><span><b>E-Program Brochure</b> · PDF</span></div>
+        <div><i data-lucide="file-text"></i><span><b>Product Catalog</b> · PDF</span></div></div>`;
+    case 'event': return `<div class="ev-poster"><img src="class.jpeg" alt="Founder Class"></div>`;
+  }
+  return '';
+}
+
+
+const stage  = document.getElementById('stage');
+const wrap   = document.getElementById('widgets');
+const guides = document.getElementById('guides');
+let scale = 1, zTop = 10;
+
+
+WIDGETS.forEach((w,i)=>{
+  const el = document.createElement('article');
+  el.className = 'widget' + (w.accent ? ' accent' : '');
+  el.id = 'w-' + w.id;
+  el.tabIndex = 0;
+  el.setAttribute('role','button');
+  el.setAttribute('aria-label', w.title);
+  el.style.cssText = `left:${w.x}px;top:${w.y}px;width:${w.w}px;height:${w.h}px;--tilt:${w.tilt}deg;--bob:${6.5+(i%4)*0.9}s;--bd:${(i%5)*-0.8}s`;
+  el.innerHTML = `<div class="w-in"><div class="w-rot"><div class="w-body">
+      <div class="w-head"><span class="w-ic"><i data-lucide="${w.icon}"></i></span>
+      <span class="w-meta">${w.no} · ${w.tag}</span></div>
+      <h3>${w.title}</h3><p>${w.short}</p>${extraHTML(w)}
+    </div></div></div>`;
+  wrap.appendChild(el);
+});
+
+
+const store = {
+  load(){ try{ return JSON.parse(localStorage.getItem('incentric-booth')||'null'); }catch(_){ return null; } },
+  save(d){ try{ localStorage.setItem('incentric-booth', JSON.stringify(d)); }catch(_){} },
+  clear(){ try{ localStorage.removeItem('incentric-booth'); }catch(_){} }
+};
+let snapOn = true;
+let fxPref = true;
+let calm   = false;
+
+
+function persist(){
+  const pos = {};
+  WIDGETS.forEach(w=>{
+    const el = document.getElementById('w-'+w.id);
+    pos[w.id] = {x:el.offsetLeft, y:el.offsetTop};
+  });
+  store.save({pos, snap:snapOn, fx:fxPref});
+}
+
+
+const saved = store.load();
+if(saved && typeof saved.snap === 'boolean') snapOn = saved.snap;
+if(saved && typeof saved.fx   === 'boolean') fxPref  = saved.fx;
+if(saved && saved.pos) WIDGETS.forEach(w=>{
+  const p = saved.pos[w.id];
+  if(p){ const el = document.getElementById('w-'+w.id); el.style.left = p.x+'px'; el.style.top = p.y+'px'; }
+});
+
+
+function fit(){
+  scale = Math.min(innerWidth/1560, innerHeight/880);
+  stage.style.transform = `scale(${scale})`;
+}
+fit(); addEventListener('resize', ()=>{ fit(); if(tourActive) placeStep(); });
+
+
+function stagePoint(e){
+  const r = stage.getBoundingClientRect();
+  return { x:(e.clientX-r.left)/scale, y:(e.clientY-r.top)/scale };
+}
+function alignSnap(x, y, data){
+  const TH = 12;
+  let bv = null, bh = null;
+  const myV = [x, x+data.w/2, x+data.w];
+  const myH = [y, y+data.h/2, y+data.h];
+  WIDGETS.forEach(o=>{
+    if(o.id === data.id) return;
+    const oEl = document.getElementById('w-'+o.id);
+    const ox = oEl.offsetLeft, oy = oEl.offsetTop;
+    [ox, ox+o.w/2, ox+o.w].forEach(b=>myV.forEach(a=>{
+      const d = b-a;
+      if(!bv || Math.abs(d) < Math.abs(bv.d)) bv = {d, line:b};
+    }));
+    [oy, oy+o.h/2, oy+o.h].forEach(b=>myH.forEach(a=>{
+      const d = b-a;
+      if(!bh || Math.abs(d) < Math.abs(bh.d)) bh = {d, line:b};
+    }));
+  });
+  const out = {x, y, v:null, h:null};
+  if(bv && Math.abs(bv.d) <= TH){ out.x = x+bv.d; out.v = bv.line; }
+  if(bh && Math.abs(bh.d) <= TH){ out.y = y+bh.d; out.h = bh.line; }
+  return out;
+}
+function drawGuides(v,h){
+  let s = '';
+  if(v != null) s += `<i class="v" style="left:${v}px"></i>`;
+  if(h != null) s += `<i class="h" style="top:${h}px"></i>`;
+  guides.innerHTML = s;
+}
+
+
+function bindDrag(el, data){
+  const rotEl = el.querySelector('.w-rot');
+  let pos = {x:el.offsetLeft, y:el.offsetTop}, off={x:0,y:0}, moved=false, lastX=0, rot=0, pid=null;
+  let specRaf=null, specX=0, specY=0;
+
+
+  el.addEventListener('pointerdown', e=>{
+    if(tourActive || overlay.classList.contains('open')) return;
+    if(e.target.closest('.demo-btn')) return;
+    e.preventDefault();
+    el.setPointerCapture(e.pointerId); pid=e.pointerId;
+    el.style.zIndex = ++zTop;
+    const p = stagePoint(e);
+    off = {x:p.x-pos.x, y:p.y-pos.y};
+    moved=false; lastX=e.clientX; rot=0;
+  });
+  el.addEventListener('pointermove', e=>{
+    if(pid===null){
+      const r = el.getBoundingClientRect();
+      specX = e.clientX-r.left; specY = e.clientY-r.top;
+      if(!specRaf) specRaf = requestAnimationFrame(()=>{
+        specRaf = null;
+        el.style.setProperty('--mx', specX+'px');
+        el.style.setProperty('--my', specY+'px');
+      });
+      return;
+    }
+    const p = stagePoint(e);
+    let nx = Math.min(Math.max(p.x-off.x, 10), 1560-data.w-10);
+    let ny = Math.min(Math.max(p.y-off.y, 100), 880-data.h-14);
+    if(!moved && Math.hypot(p.x-off.x-pos.x, p.y-off-y-pos.y)>6){ moved=true; el.classList.add('drag'); }
+    if(moved){
+      if(snapOn){
+        stage.classList.add('snap-drag');
+        nx = Math.round(nx/GRID)*GRID;
+        ny = Math.round(ny/GRID)*GRID;
+        const a = alignSnap(nx, ny, data);
+        nx = Math.min(Math.max(a.x, 10), 1560-data.w-10);
+        ny = Math.min(Math.max(a.y, 100), 880-data.h-14);
+        drawGuides(a.v, a.h);
+      } else {
+        drawGuides(null, null);
+      }
+      pos = {x:nx, y:ny};
+      el.style.left = nx+'px'; el.style.top = ny+'px';
+      const target = Math.max(-7, Math.min(7, (e.clientX-lastX)*0.55));
+      rot += (target-rot)*0.35; lastX = e.clientX;
+      rotEl.style.setProperty('--rot', rot.toFixed(2)+'deg');
+    }
+  });
+  const end = e=>{
+    if(pid===null) return;
+    try{ el.releasePointerCapture(pid); }catch(_){}
+    pid=null; el.classList.remove('drag');
+    stage.classList.remove('snap-drag');
+    drawGuides(null, null);
+    rotEl.style.removeProperty('--rot');
+    if(!moved) openFor(data.id); else persist();
+  };
+  el.addEventListener('pointerup', end);
+  el.addEventListener('pointercancel', end);
+  el.addEventListener('keydown', e=>{ if(e.key==='Enter') openFor(data.id); });
+}
+WIDGETS.forEach(w=>bindDrag(document.getElementById('w-'+w.id), w));
+
+
+const snapBtn   = document.getElementById('snapBtn');
+function applySnapUI(){
+  snapBtn.classList.toggle('on', snapOn);
+  snapBtn.setAttribute('aria-pressed', String(snapOn));
+}
+applySnapUI();
+snapBtn.addEventListener('click', ()=>{
+  snapOn = !snapOn;
+  applySnapUI();
+  persist();
+  toast(snapOn ? 'Snapping on — grid + alignment guides active.' : 'Snapping off — free positioning.', 'magnet');
+});
+
+
+const fxBtn   = document.getElementById('fxBtn');
+let idleT = null;
+
+
+function applyFxUI(){
+  fxBtn.classList.toggle('on', !calm && fxPref);
+}
+function setCalm(on){
+  if(calm === on) return;
+  calm = on;
+  document.body.classList.toggle('calm', on);
+  applyFxUI();
+}
+fxBtn.addEventListener('click', ()=>{
+  fxPref = !fxPref;
+  setCalm(!fxPref);
+  applyFxUI();
+  persist();
+  resetIdle();
+  toast(fxPref ? 'Motion on — full experience.' : 'Motion off — calm mode, cooler laptop.', 'fan');
+});
+function resetIdle(){
+  clearTimeout(idleT);
+  if(fxPref) idleT = setTimeout(()=>{
+    setCalm(true);
+    toast('Idle — ambient motion paused to keep things cool.', 'fan');
+  }, IDLE_MS);
+}
+['pointermove','pointerdown','keydown','wheel','touchstart'].forEach(ev=>
+  addEventListener(ev, ()=>{
+    if(calm && fxPref) setCalm(false);
+    resetIdle();
+  }, {passive:true})
+);
+if(!fxPref) setCalm(true);
+applyFxUI();
+resetIdle();
+
+
+const overlay = document.getElementById('overlay');
+const modal   = document.getElementById('modal');
+
+
+const MODALS = {
+  about: () => `
+    <div class="m-head"><span class="m-ic"><i data-lucide="building-2"></i></span>
+      <div><div class="m-eyebrow">01 · Profile</div><h2>About Incentric</h2></div></div>
+    <p class="m-lead">Incentric (PT. Incentric Global Inovasi) has been delivering Customer Experience Management since 2023 — a strategic approach that turns every customer interaction into a memorable moment, building loyalty that lasts.</p>
+    <div class="m-stats">
+      <div><b>3+</b><span>Years running</span></div>
+      <div><b>50+</b><span>Clients served</span></div>
+      <div><b>4</b><span>Service programs</span></div></div>
+    <div class="m-sec">
+      <div class="m-row"><i data-lucide="heart-handshake"></i><div><b>WOW Experience Loop</b><p>Our proprietary framework — bringing WOW from a concept into a consistent, operational system for your whole team.</p></div></div>
+      <div class="m-row"><i data-lucide="repeat"></i><div><b>Loyal customers win</b><p>Loyal customers don't switch, buy more, reorder, and recommend — growing lifetime value while costs go down.</p></div></div>
+      <div class="m-row"><i data-lucide="rocket"></i><div><b>Strategy to execution</b><p>From business strategy to disciplined execution — Embedded with the Sprint Productivity System (SPS).</p></div></div>
+    </div>${mFoot()}`,
+  products: () => `
+    <div class="m-head"><span class="m-ic"><i data-lucide="layers"></i></span>
+      <div><div class="m-eyebrow">02 · Solutions</div><h2>Products &amp; Solutions</h2></div></div>
+    <p class="m-lead">Transform your company culture and grow customer loyalty through mentoring and in-house training.</p>
+    <div class="m-sec">
+      <div class="m-row"><i data-lucide="database"></i><div><b>CRM Architecture</b><p>Design an effective CRM strategy to boost your company's revenue — from customer persona to CRM workflow.</p></div></div>
+      <div class="m-row"><i data-lucide="users"></i><div><b>Employee Engagement Survey</b><p>Measure engagement level to understand each division and build the right programs for your people.</p></div></div>
+      <div class="m-row"><i data-lucide="sparkles"></i><div><b>Service Experience</b><p>Guide your team to deliver service that is not just good — but creates unforgettable customer experiences.</p></div></div>
+      <div class="m-row"><i data-lucide="gauge"></i><div><b>Sprint Productivity System (SPS)</b><p>Build the right business strategy, execute it well, and monitor effectively — backed by the Sprintime tool.</p></div></div>
+    </div>${mFoot()}`,
+  framework: () => `
+    <div class="m-head"><span class="m-ic"><i data-lucide="infinity"></i></span>
+      <div><div class="m-eyebrow">03 · Framework</div><h2>WOW Experience Loop</h2></div></div>
+    <p class="m-lead">Our own implementation framework — designed so WOW never stays a nice concept, but becomes an operational system your whole team applies consistently, even without the owner watching every detail.</p>
+    <div class="m-sec">
+      <div class="m-row"><i data-lucide="users"></i><div><b>Leadership &amp; Management</b><p>Raise each leader's conscious and influence level, and build the structure and workflows behind the strategy.</p></div></div>
+      <div class="m-row"><i data-lucide="sparkles"></i><div><b>Service Culture &amp; WOW Service</b><p>Shape service values, standards, and memorable WOW moments your team can repeat.</p></div></div>
+      <div class="m-row"><i data-lucide="database"></i><div><b>CRM &amp; Marketing</b><p>Structure your customer data, follow-up flow, and online presence to keep relationships growing.</p></div></div>
+    </div>${mFoot()}`,
+  partnership: () => `
+    <div class="m-head"><span class="m-ic"><i data-lucide="handshake"></i></span>
+      <div><div class="m-eyebrow">06 · Partnership</div><h2>Partnership Tiers</h2></div></div>
+    <p class="m-lead">Three ways to work together — from a focused training to a full mentoring program — all built on the WOW Experience Loop.</p>
+    <div class="m-sec">
+      <div class="m-row"><i data-lucide="presentation"></i><div><b>In-House Training</b><p>1-day offline training programs (CRM Architecture, Service Experience, or Sprint Productivity System) with follow-up online consultations.</p></div></div>
+      <div class="m-row"><i data-lucide="zap"></i><div><b>6-Month Mentoring<span class="badge">Most popular</span></b><p>A focused CX management mentoring program — designing and implementing the WOW Experience Loop over six months.</p></div></div>
+      <div class="m-row"><i data-lucide="crown"></i><div><b>12-Month Mentoring</b><p>A full-year, comprehensive Customer Experience Management mentoring program covering leadership, service culture, CRM, and marketing for sustained transformation.</p></div></div>
+    </div>
+    <div class="m-foot"><button class="btn btn-ghost" data-act="close">Close</button>
+    <button class="btn btn-primary" data-act="offer"><i data-lucide="send"></i>Request a proposal</button></div>`,
+  materials: () => `
+    <div class="m-head"><span class="m-ic"><i data-lucide="folder-down"></i></span>
+      <div><div class="m-eyebrow">07 · Materials</div><h2>Decks &amp; Files</h2></div></div>
+    <p class="m-lead">Everything we present at this booth, ready to take home and share with your team.</p>
+    <div class="m-sec">
+      <div class="m-row"><i data-lucide="file-text"></i><div><b>E-Program-Incentric.pdf</b><p>Full CX mentoring &amp; training program overview.</p></div><button class="act" data-act="download" data-file="ebook-program%20incentric.pdf"><i data-lucide="download"></i>Download</button></div>
+      <div class="m-row"><i data-lucide="file-text"></i><div><b>Incentric-Product.pdf</b><p>Product catalog and service breakdown.</p></div><button class="act" data-act="download" data-file="incentric%20product.pdf"><i data-lucide="download"></i>Download</button></div>
+    </div>${mFoot()}`,
+  contact: () => `
+    <div class="m-head"><span class="m-ic"><i data-lucide="mail"></i></span>
+      <div><div class="m-eyebrow">05 · Contact</div><h2>Get in Touch</h2></div></div>
+    <p class="m-lead">The conversation doesn't end at the booth. Reach us on WhatsApp or email — we reply fast.</p>
+    <div class="m-sec">
+      <div class="m-row"><i data-lucide="message-circle"></i><div><b>0812-4901-7400</b><p>WhatsApp — the fastest way to talk to us.</p></div><a class="act" href="https://wa.me/6281249017400" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Chat</a></div>
+      <div class="m-row"><i data-lucide="mail"></i><div><b>incentric.id@gmail.com</b><p>Official email inbox — or use the site contact form.</p></div><button class="act" data-act="copy"><i data-lucide="copy"></i>Copy</button></div>
+      <div class="m-row"><i data-lucide="map-pin"></i><div><b>Kavling Mekarsari, Jl. Raya Bamban No.28, Pakis</b><p>Malang, East Java — our head office.</p></div></div>
+      <div class="m-row"><i data-lucide="qr-code"></i><div><b>QR on the widget</b><p>Point a visitor's camera at the right-side widget — it opens WhatsApp directly.</p></div></div>
+    </div>${mFoot()}`,
+  event: () => `
+    <div class="m-head"><span class="m-ic"><i data-lucide="calendar-clock"></i></span>
+      <div><div class="m-eyebrow">08 · Event</div><h2>Founder Class</h2></div></div>
+    <p class="m-lead">A special class at the booth — led by Incentric's founder himself.</p>
+    <div class="m-sec">
+      <div class="m-row"><i data-lucide="calendar-days"></i><div><b>5 September 2026 · 10:00–12:00</b><p>Two-hour session at JICC Jakarta.</p></div></div>
+      <div class="m-row"><i data-lucide="user"></i><div><b>Arisdiansah — Founder, Incentric</b><p>Directly from the founder's perspective and hands-on experience.</p></div></div>
+      <div class="m-row"><i data-lucide="presentation"></i><div><b>Class topic</b><p>Building Customer Experience and CRM Strategy — how to turn every interaction into loyalty.</p></div></div>
+    </div>
+    <div class="m-row" style="border:none"><img src="class.jpeg" alt="Founder Class poster" style="width:100%;max-height:340px;object-fit:contain;border-radius:14px"></div>
+    <div class="m-foot"><button class="btn btn-ghost" data-act="close">Close</button>
+    <button class="btn btn-primary" data-act="remind"><i data-lucide="bell"></i>Remind me</button></div>`,
+};
+function mFoot(){
+  return `<div class="m-foot"><button class="btn btn-ghost" data-act="close">Close</button>
+  <button class="btn btn-primary" data-act="link"><i data-lucide="external-link"></i>Open full page</button></div>`;
+}
+
+
+function openFor(id){
+  if(id === 'tour'){ startTour(); return; }
+  if(!MODALS[id]) return;
+  modal.innerHTML = MODALS[id]();
+  lucide.createIcons();
+  overlay.classList.add('open');
+  modal.scrollTop = 0;
+  modal.querySelector('.btn')?.focus();
+}
+function closeModal(){ overlay.classList.remove('open'); }
+
+
+document.addEventListener('click', e=>{
+  if(e.target === overlay){ closeModal(); return; }
+  if(e.target.closest('[data-tour]')){ startTour(); return; }
+  const actEl = e.target.closest('[data-act]');
+  if(!actEl) return;
+  const act = actEl.dataset.act;
+  if(act==='close') closeModal();
+  if(act==='link')  toast('Link ready — point this to the live page.','external-link');
+  if(act==='download'){
+    const file = actEl.dataset.file || 'ebook-program%20incentric.pdf';
+    const name = file.includes('product') ? 'Incentric-Product.pdf' : 'Incentric-E-Brochure.pdf';
+    const a=document.createElement('a'); a.href=file; a.download=name; a.click();
+    toast('Download started — ' + name, 'file-down');
+  }
+  if(act==='offer') toast('Proposal request sent — we\u2019ll reply on WhatsApp.','send');
+  if(act==='remind') toast('Session reminder saved.','bell');
+  if(act==='copy'){
+    navigator.clipboard?.writeText('incentric.id@gmail.com')
+      .then(()=>toast('Email copied to clipboard.','check'))
+      .catch(()=>toast('Copy manually: incentric.id@gmail.com','mail'));
+  }
+});
+
+
+const tourLayer = document.getElementById('tourLayer');
+const spot = document.getElementById('spot');
+const tourCard = document.getElementById('tourCard');
+let tourActive = false, tourIdx = 0;
+
+
+function startTour(){
+  if(tourActive) return;
+  closeModal();
+  tourActive = true; tourIdx = 0;
+  tourLayer.classList.add('active');
+  placeStep();
+}
+function placeStep(){
+  const s = TOUR[tourIdx];
+  const w = document.getElementById('w-'+s.id);
+  const x = w.offsetLeft-12, y = w.offsetTop-12, wd = w.offsetWidth+24, ht = w.offsetHeight+24;
+  spot.style.cssText = `left:${x}px;top:${y}px;width:${wd}px;height:${ht}px`;
+  const cardH = 190;
+  let cy = (y+ht+22+cardH < 880) ? y+ht+22 : y-22-cardH;
+  let cx = Math.min(Math.max(x+wd/2-167, 24), 1560-334-24);
+  tourCard.style.left = cx+'px';
+  tourCard.style.top  = cy+'px';
+  tourCard.classList.remove('in'); void tourCard.offsetWidth;
+  tourCard.innerHTML = `
+    <div class="t-eyebrow">Booth Tour — ${tourIdx+1} / ${TOUR.length}</div>
+    <h4>${s.t}</h4><p>${s.d}</p>
+    <div class="t-bar"><i style="width:${((tourIdx+1)/TOUR.length)*100}%"></i></div>
+    <div class="t-foot">
+      <button class="t-next" id="tNext">${tourIdx===TOUR.length-1?'Finish tour':'Next'}<i data-lucide="chevron-right"></i></button>
+      <button class="t-quit" id="tQuit" title="End tour"><i data-lucide="x"></i></button>
+    </div>`;
+  tourCard.classList.add('in');
+  lucide.createIcons();
+  document.getElementById('tNext').onclick = ()=>{
+    if(tourIdx < TOUR.length-1){ tourIdx++; placeStep(); }
+    else endTour(true);
+  };
+  document.getElementById('tQuit').onclick = ()=>endTour(false);
+}
+function endTour(done){
+  tourActive = false;
+  tourLayer.classList.remove('active');
+  toast(done ? 'Tour finished — now go wow them!' : 'Tour stopped.', done?'party-popper':'x');
+}
+document.getElementById('heroTour').onclick = startTour;
+
+
+document.getElementById('resetBtn').onclick = ()=>{
+  WIDGETS.forEach(w=>{
+    const el = document.getElementById('w-'+w.id);
+    el.style.transition = 'left .7s cubic-bezier(.2,1.3,.4,1), top .7s cubic-bezier(.2,1.3,.4,1)';
+    el.style.left = w.x+'px'; el.style.top = w.y+'px';
+    setTimeout(()=>{ el.style.transition=''; }, 750);
+  });
+  store.clear();
+  toast('Layout restored to default.','rotate-ccw');
+};
+
+
+const toasts = document.getElementById('toasts');
+function toast(msg, icon='check'){
+  if(toasts.children.length > 2) toasts.firstChild.remove();
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<i data-lucide="${icon}"></i><span>${msg}</span>`;
+  toasts.appendChild(t);
+  lucide.createIcons();
+  requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(), 420); }, 3000);
+}
+
+
+const fmtTime = new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+function tick(){
+  document.getElementById('clock').textContent = fmtTime.format(new Date());
+  const diff = EVENT_DATE - Date.now();
+  document.getElementById('dcount').textContent =
+    diff <= 0 ? 'Live now!' : 'T-' + Math.floor(diff/86400000);
+}
+tick(); setInterval(tick, 1000);
+
+
+const blobs = [...document.querySelectorAll('.blob')];
+let px=0, py=0, ptx=0, pty=0, pRaf=null;
+function pLoop(){
+  px += (ptx-px)*.06; py += (pty-py)*.06;
+  blobs.forEach(b=>{
+    const d = +b.dataset.depth;
+    b.style.translate = `${(-px*d).toFixed(2)}px ${(-py*d).toFixed(2)}px`;
+  });
+  if(Math.abs(ptx-px) > .0005 || Math.abs(pty-py) > .0005){
+    pRaf = requestAnimationFrame(pLoop);
+  } else {
+    pRaf = null;
+  }
+}
+addEventListener('pointermove', e=>{
+  ptx = e.clientX/innerWidth - .5;
+  pty = e.clientY/innerHeight - .5;
+  if(!pRaf && !calm) pRaf = requestAnimationFrame(pLoop);
+}, {passive:true});
+
+
+addEventListener('keydown', e=>{
+  if(e.key === 'Escape'){
+    if(overlay.classList.contains('open')) closeModal();
+    else if(tourActive) endTour(false);
+    return;
+  }
+  if((e.key==='s'||e.key==='S') && !e.metaKey && !e.ctrlKey && !e.altKey
+     && !overlay.classList.contains('open') && !tourActive){
+    snapBtn.click();
+  }
+});
+
+
+window.addEventListener('load', ()=>{
+  const box = document.getElementById('qrbox');
+  if(window.QRCode && box){
+    new QRCode(box, {text: WA_URL, width: 128, height: 128,
+      colorDark:'#0A2470', colorLight:'#ffffff', correctLevel: QRCode.CorrectLevel.M});
+  }
+});
+
+
+lucide.createIcons();
+if(innerWidth < 720) setTimeout(()=>toast('Best experienced on a large screen — designed for the booth monitor.','monitor'), 900);
+</script>
+</body>
+</html>
