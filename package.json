@@ -1,0 +1,14 @@
+{
+  "name": "jec-incentric-booth",
+  "version": "1.0.0",
+  "description": "Incentric JED 2026 booth — lead capture, fully local.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "express": "^4.19.2"
+  }
+}

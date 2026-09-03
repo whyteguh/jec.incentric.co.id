@@ -63,20 +63,6 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
 .stage{position:relative;width:1560px;height:880px;transform-origin:center center}
 
 
-.grid-layer{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .35s;
-  background-image:
-    linear-gradient(rgba(255,255,255,.075) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.075) 1px,transparent 1px);
-  background-size:40px 40px}
-.stage.snap-drag .grid-layer{opacity:1}
-
-
-.guides{position:absolute;inset:0;z-index:220;pointer-events:none}
-.guides i{position:absolute;background:#FFD866;box-shadow:0 0 10px rgba(255,197,49,.75);border-radius:2px}
-.guides .v{top:6px;bottom:6px;width:1.5px}
-.guides .h{left:6px;right:6px;height:1.5px}
-
-
 /* ---------- Header ---------- */
 .top{position:absolute;top:0;left:0;right:0;padding:30px 56px 0;
   display:flex;justify-content:space-between;align-items:center;gap:16px}
@@ -104,15 +90,15 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
 
 
 /* ---------- Hero ---------- */
-.hero{position:absolute;left:56px;top:176px;width:524px}
+.hero{position:absolute;left:56px;top:150px;width:524px}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;
   background:rgba(255,197,49,.14);border:1px solid rgba(255,197,49,.4);
   font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--yellow);text-transform:uppercase}
-.hero h1{font-family:'Clash Display';font-weight:600;font-size:63px;line-height:1.03;
-  letter-spacing:-.02em;margin:22px 0 18px}
+.hero h1{font-family:'Clash Display';font-weight:600;font-size:62px;line-height:1.05;
+  letter-spacing:-.02em;margin:24px 0 20px}
 .hero h1 em{font-style:normal;color:var(--yellow)}
-.hero .sub{font-size:15px;line-height:1.68;color:var(--txt-dim);max-width:452px}
-.hero-btns{display:flex;gap:12px;margin-top:28px}
+.hero .sub{font-size:15px;line-height:1.72;color:var(--txt-dim);max-width:452px}
+.hero-btns{display:flex;gap:14px;margin-top:34px}
 .btn{display:inline-flex;align-items:center;gap:9px;border:none;cursor:pointer;
   font-family:'Satoshi';font-weight:700;font-size:14px;border-radius:999px;
   padding:14px 23px;transition:transform .25s,box-shadow .25s,background .25s}
@@ -124,30 +110,25 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
 .btn-ghost{background:var(--glass);border:1px solid var(--line);color:#fff;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
 .btn-ghost:hover{background:rgba(255,255,255,.18);transform:translateY(-2px)}
-.hero-hints{margin-top:34px;font-size:10.5px;font-weight:700;letter-spacing:.2em;
+.hero-hints{margin-top:36px;font-size:10.5px;font-weight:700;letter-spacing:.2em;
   text-transform:uppercase;color:rgba(234,242,255,.5)}
 .hero-hints span{color:rgba(255,197,49,.8);margin:0 7px}
 
 
 /* ============ WIDGETS ============ */
-.widget{position:absolute;border-radius:26px;cursor:grab;user-select:none;-webkit-user-select:none;
-  touch-action:none;outline:none;
-  transition:transform .45s cubic-bezier(.22,1.4,.36,1)}
-.widget:hover{transform:translateY(-8px)}
+.widget{position:absolute;border-radius:26px;cursor:pointer;user-select:none;-webkit-user-select:none;
+  touch-action:manipulation;outline:none;
+  transition:transform .3s cubic-bezier(.22,1.4,.36,1)}
+.widget:hover{transform:translateY(-6px)}
 .widget:focus-visible{outline:2px solid var(--yellow);outline-offset:4px;border-radius:26px}
-.widget.drag{cursor:grabbing;transition:none}
 .w-in{position:absolute;inset:0;animation:bob var(--bob,7s) ease-in-out infinite;animation-delay:var(--bd,0s)}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 .w-rot{position:absolute;inset:0;border-radius:26px;overflow:hidden;
-  transform:rotate(var(--rot,var(--tilt,0deg))) scale(var(--s,1));
-  transition:transform .65s cubic-bezier(.2,1.5,.4,1),box-shadow .4s;
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
     linear-gradient(140deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,.11) 48%,rgba(160,200,255,.13) 100%);
   box-shadow:0 18px 44px rgba(3,14,58,.38),inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 0 rgba(255,255,255,.07)}
-.widget.drag .w-rot{transition:none;--s:1.045;
-  box-shadow:0 40px 80px rgba(2,8,38,.55),inset 0 1px 0 rgba(255,255,255,.5)}
-.widget:hover .w-rot{--rot:0deg}
+.widget:hover .w-rot{transform:rotate(0deg)}
 .w-rot::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;z-index:3;pointer-events:none;
   background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),
     rgba(255,255,255,.95),rgba(255,255,255,.28) 42%,rgba(255,255,255,.05) 72%);
@@ -182,13 +163,6 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
 .metric b{font-family:'Clash Display';font-weight:600;font-size:44px;line-height:1;color:var(--yellow);
   text-shadow:0 4px 24px rgba(255,197,49,.3)}
 .metric span{display:block;font-size:11px;line-height:1.45;color:var(--txt-dim);margin-top:7px}
-.demo-btn{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:9px;
-  border:none;cursor:pointer;border-radius:999px;padding:12px 20px;
-  background:var(--ink);color:#DCE8FF;font-family:'Satoshi';font-weight:700;font-size:13.5px;
-  box-shadow:0 10px 26px rgba(6,18,70,.4);transition:transform .25s,box-shadow .25s}
-.demo-btn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(6,18,70,.5)}
-.demo-btn:active{transform:scale(.95)}
-.demo-btn svg{width:15px;height:15px}
 .qr-wrap{margin-top:auto;display:flex;align-items:center;gap:12px}
 .qr-box{width:88px;height:88px;flex:none;background:#fff;border-radius:14px;padding:7px;
   box-shadow:0 8px 22px rgba(3,12,50,.35)}
@@ -211,35 +185,6 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
 .widget.accent .w-meta{color:rgba(10,36,112,.65)}
 .widget.accent .w-body h3{color:var(--ink)}
 .widget.accent .w-body>p{color:rgba(10,36,112,.75)}
-
-
-/* ============ BOOTH TOUR ============ */
-#tourLayer{position:absolute;inset:0;z-index:140;pointer-events:none;opacity:0;transition:opacity .35s}
-#tourLayer.active{opacity:1}
-#spot{position:absolute;border-radius:32px;
-  box-shadow:0 0 0 2.5px rgba(255,199,54,.95),0 0 46px rgba(255,199,54,.3),0 0 0 9999px rgba(3,10,38,.58);
-  transition:all .55s cubic-bezier(.65,0,.25,1)}
-#tourCard{position:absolute;width:334px;pointer-events:auto;border-radius:22px;padding:21px 23px;
-  background:linear-gradient(150deg,rgba(24,52,130,.94),rgba(8,24,80,.96));
-  border:1px solid rgba(255,255,255,.22);
-  box-shadow:0 26px 60px rgba(2,8,36,.5),inset 0 1px 0 rgba(255,255,255,.3)}
-#tourCard.in{animation:cardIn .45s cubic-bezier(.2,1.3,.4,1)}
-@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-#tourCard .t-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--yellow)}
-#tourCard h4{font-family:'Clash Display';font-weight:600;font-size:20px;margin:9px 0 7px}
-#tourCard p{font-size:12.5px;line-height:1.6;color:var(--txt-dim)}
-.t-bar{height:3px;border-radius:99px;background:rgba(255,255,255,.16);margin:15px 0 14px;overflow:hidden}
-.t-bar i{display:block;height:100%;background:var(--yellow);border-radius:99px;transition:width .45s ease}
-.t-foot{display:flex;justify-content:space-between;align-items:center}
-.t-next{display:inline-flex;align-items:center;gap:7px;border:none;cursor:pointer;border-radius:999px;
-  padding:10px 18px;background:var(--yellow);color:var(--ink);
-  font-family:'Satoshi';font-weight:700;font-size:12.5px;transition:transform .2s}
-.t-next:hover{transform:translateY(-1px)}
-.t-next svg{width:14px;height:14px}
-.t-quit{background:none;border:none;cursor:pointer;color:rgba(234,242,255,.6);
-  display:grid;place-items:center;width:32px;height:32px;border-radius:99px;transition:.2s}
-.t-quit:hover{background:rgba(255,255,255,.12);color:#fff}
-.t-quit svg{width:15px;height:15px}
 
 
 /* ============ MODAL ============ */
@@ -282,6 +227,13 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
 .m-time{font-family:'Clash Display';font-weight:600;font-size:19px;color:var(--yellow);flex:none;min-width:64px}
 .m-foot{display:flex;justify-content:flex-end;gap:11px;margin-top:24px}
 .m-foot .btn{padding:12px 20px;font-size:13px}
+.m-qr{display:flex;gap:20px;align-items:center;margin:16px 0 4px;
+  padding:16px;border-radius:18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15)}
+.m-qr .qr-box{width:128px;height:128px;flex:none;border-radius:12px;background:#fff;padding:6px;display:grid;place-items:center}
+.m-qr .qr-box img,.m-qr .qr-box canvas{display:block}
+.m-qr-r b{display:block;font-size:16px;font-weight:700;color:#fff}
+.m-qr-r p{font-size:12.5px;line-height:1.5;color:var(--txt-dim);margin:5px 0 12px}
+.m-qr-r a{text-decoration:none}
 
 
 /* ============ TOASTS ============ */
@@ -297,6 +249,39 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
 
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+/* ============ LEAD CAPTURE (chat-style) ============ */
+.lead-box{position:absolute;left:56px;top:620px;width:472px;height:240px;z-index:20;
+  display:flex;flex-direction:column;overflow:hidden;border-radius:22px;
+  background:linear-gradient(150deg,rgba(28,58,140,.97),rgba(9,26,86,.99));
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 22px 50px rgba(2,8,36,.5),inset 0 1px 0 rgba(255,255,255,.3)}
+.lp-head{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.14)}
+.lp-head .lp-ic{width:36px;height:36px;border-radius:11px;flex:none;display:grid;place-items:center;
+  background:rgba(255,197,49,.18);border:1px solid rgba(255,197,49,.4);color:var(--yellow)}
+.lp-head .lp-ic svg{width:17px;height:17px}
+.lp-head b{font-family:'Clash Display';font-size:16px;font-weight:600;line-height:1.1;display:block}
+.lp-head small{font-size:11px;color:rgba(234,242,255,.65)}
+.lp-msgs{flex:1;overflow-y:auto;padding:16px 16px 6px;display:flex;flex-direction:column;gap:10px}
+.lp-msg{max-width:85%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.5;
+  animation:cardIn .35s cubic-bezier(.2,1.3,.4,1)}
+.lp-msg.bot{align-self:flex-start;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);
+  color:#EAF2FF;border-bottom-left-radius:4px}
+.lp-msg.user{align-self:flex-end;background:var(--yellow);color:var(--ink);
+  border-bottom-right-radius:4px;font-weight:500}
+.lp-msg.ok{align-self:flex-end;background:rgba(76,205,140,.18);border:1px solid rgba(76,205,140,.4);
+  color:#BFF6D4;border-bottom-right-radius:4px}
+.lp-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid rgba(255,255,255,.14)}
+.lp-input input{flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:#fff;border-radius:14px;padding:11px 14px;font-family:'Satoshi';font-size:13.5px;outline:none}
+.lp-input input::placeholder{color:rgba(234,242,255,.5)}
+.lp-input input:focus{border-color:rgba(255,197,49,.6)}
+.lp-input button{width:44px;height:44px;flex:none;border-radius:14px;border:none;cursor:pointer;
+  background:var(--yellow);color:var(--ink);display:grid;place-items:center;transition:transform .2s}
+.lp-input button:hover{transform:translateY(-2px)}
+.lp-input button:active{transform:scale(.92)}
+.lp-input button svg{width:18px;height:18px}
 </style>
 </head>
 <body>
@@ -323,11 +308,8 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
         <span class="chip"><i data-lucide="calendar-days"></i>3–6 Sep 2026 · JICC Jakarta</span>
         <span class="chip"><i data-lucide="timer"></i><b id="dcount">T-—</b></span>
         <span class="chip"><i data-lucide="clock"></i><b id="clock">--:--:--</b>&nbsp;WIB</span>
-        <button class="chip btn" id="snapBtn" title="Toggle snapping (S)" aria-pressed="true">
-          <i data-lucide="magnet"></i></button>
         <button class="chip btn" id="fxBtn" title="Ambient motion — turn off to keep the laptop cool">
           <i data-lucide="fan"></i></button>
-        <button class="chip btn" id="resetBtn" title="Restore default layout"><i data-lucide="rotate-ccw"></i></button>
       </div>
     </header>
 
@@ -337,21 +319,28 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
       <h1>Grow your customer experience<br>with <em>Incentric</em>.</h1>
       <p class="sub">Incentric has been delivering Customer Experience Management since 2023 — a strategic approach that ensures every customer interaction becomes a memorable moment, turning them into loyal advocates.</p>
       <div class="hero-btns">
-        <button class="btn btn-primary" id="heroTour"><i data-lucide="play"></i>Start booth tour</button>
         <button class="btn btn-ghost" data-act="download"><i data-lucide="folder-down"></i>E-Brochure</button>
       </div>
-      <p class="hero-hints">Drag to arrange <span>·</span> S to snap <span>·</span> Esc to close</p>
+      <p class="hero-hints">Tap any card for the full story <span>·</span> Esc to close</p>
     </section>
 
 
-    <div class="grid-layer" id="gridLayer"></div>
     <div id="widgets"></div>
-    <div class="guides" id="guides"></div>
 
 
-    <div id="tourLayer">
-      <div id="spot"></div>
-      <div id="tourCard"></div>
+    <div class="lead-box" id="leadBox" aria-label="Lead capture">
+      <div class="lp-head">
+        <span class="lp-ic"><i data-lucide="clipboard-list"></i></span>
+        <div><b>Say hi to Incentric</b><small>Leave your details — we&rsquo;ll follow up.</small></div>
+      </div>
+      <div class="lp-msgs" id="leadMsgs">
+        <div class="lp-msg bot">Hi! 👍 Tell us who you are and what you're looking for — in your own words. Drop your name, WhatsApp number, company, and what you need (CRM, training, mentoring, etc).</div>
+      </div>
+      <div class="lp-input">
+        <input id="leadInput" type="text" placeholder="e.g. Saya Budi dari Toko Maju, WA 0812..., tertarik training CRM"
+          autocomplete="off">
+        <button id="leadSend" title="Send"><i data-lucide="send"></i></button>
+      </div>
     </div>
 
 
@@ -372,31 +361,23 @@ body.calm .blob,body.calm .w-in{animation-play-state:paused}
 const EVENT_DATE = new Date('2026-09-03T09:00:00+07:00');
 const SITE_URL   = 'https://incentric.co.id';
 const WA_URL     = 'https://wa.me/6281249017400';
+const SHEET_URL  = 'https://script.google.com/macros/s/AKfycbzSLqpBb3GwSOhnBKiU-BnPEou-iuTmxqsnVWD_mZBDTftcCWetpkgTjcFpWICPKVbt/exec'; // Google Apps Script Web App URL (…/exec). Kosongkan utk fallback ke API lokal.
 const GRID       = 40;
 const IDLE_MS    = 90000;
 
 
 const WIDGETS = [
-  {id:'about',       no:'01', tag:'Profile',     icon:'building-2',     title:'About Incentric',     short:'Customer Experience Management since 2023 — turning every interaction into a memorable moment.', x:620, y:120, w:400, h:250, tilt:-0.8, extra:'stats'},
-  {id:'products',    no:'02', tag:'Solutions',   icon:'layers',         title:'Products & Solutions',short:'Four service lines — from CX mentoring to in-house training.', x:1052, y:120, w:448, h:250, tilt:0.5, extra:'chips',
+  {id:'about',       no:'01', tag:'Profile',   icon:'building-2',     title:'About Incentric',     short:'Customer Experience Management since 2023 — turning every interaction into a memorable moment.', x:600, y:120, w:420, h:250, tilt:0, extra:'stats'},
+  {id:'products',    no:'02', tag:'Solutions', icon:'layers',         title:'Products & Solutions',short:'Four service lines — from CX mentoring to in-house training.', x:1056, y:120, w:484, h:250, tilt:0, extra:'chips',
     chips:['CRM Architecture','Employee Engagement','Service Experience','Sprint Productivity']},
-  {id:'framework',   no:'03', tag:'Framework',  icon:'infinity',       title:'WOW Experience Loop', short:'Our signature framework.', x:620, y:400, w:360, h:260, tilt:0.7, extra:'fw'},
-  {id:'tour',        no:'04', tag:'Interactive', icon:'sparkles',       title:'Booth Tour',          short:'Let me guide your pitch — the story flow, step by step.', x:1000, y:402, w:338, h:232, tilt:-0.6, extra:'cta', accent:true},
-  {id:'contact',     no:'05', tag:'Contact',     icon:'qr-code',        title:'Contact & QR',        short:'Scan to chat on WhatsApp — 0812-4901-7400.', x:1340, y:402, w:210, h:232, tilt:0.9, extra:'qr'},
-  {id:'partnership', no:'06', tag:'Partnership', icon:'handshake',      title:'Partnership Tiers',   short:'Three ways to work together — sized to your program.', x:620, y:666, w:392, h:168, tilt:-0.5, extra:'tiers'},
-  {id:'materials',   no:'07', tag:'Materials',   icon:'folder-down',    title:'Decks & Files',       short:'Take our story home with you.', x:1042, y:666, w:220, h:168, tilt:0.6, extra:'files'},
-  {id:'event',       no:'08', tag:'Event',      icon:'calendar-clock', title:'Founder Class',      short:'5 Sep · 10:00–12:00 · Arisdiansah, Founder.', x:1292, y:666, w:208, h:168, tilt:-0.9, extra:'event'},
+  {id:'framework',   no:'03', tag:'Framework', icon:'infinity',       title:'WOW Experience Loop', short:'Our signature framework.', x:600, y:410, w:280, h:260, tilt:0, extra:'fw'},
+  {id:'event',       no:'04', tag:'Event',     icon:'calendar-clock', title:'Founder Class',       short:'5 Sep · 10:00–12:00 · Arisdiansah, Founder.', x:916, y:410, w:328, h:260, tilt:0, extra:'event', accent:true},
+  {id:'contact',     no:'05', tag:'Contact',   icon:'qr-code',        title:'Contact & QR',        short:'Scan to chat on WhatsApp — 0812-4901-7400.', x:1280, y:410, w:260, h:260, tilt:0, extra:'qr'},
+  {id:'partnership', no:'06', tag:'Partnership', icon:'handshake',    title:'Partnership Tiers',   short:'Three ways to work together — sized to your program.', x:600, y:700, w:420, h:168, tilt:0, extra:'tiers'},
+  {id:'materials',   no:'07', tag:'Materials', icon:'folder-down',    title:'Decks & Files',       short:'Take our story home with you.', x:1056, y:700, w:484, h:168, tilt:0, extra:'files'},
 ];
 
 
-const TOUR = [
-  {id:'about',       t:'Start with the story',        d:'Open with the short profile. The numbers on this card are usually enough to break the ice.'},
-  {id:'products',    t:'Show the solutions',          d:'Four service lines — CRM, Employee Engagement, Service Experience, and Sprint Productivity System.'},
-  {id:'framework',   t:'Introduce the framework',     d:'The WOW Experience Loop is what makes your CX programs consistent and repeatable.'},
-  {id:'partnership', t:'Talk partnership',            d:'Three ways to work together: in-house training, 6-month, or 12-month mentoring.'},
-  {id:'materials',   t:'Give them something to take', d:'The program brochure and product catalog are ready to download for follow-up.'},
-  {id:'contact',     t:'Close with contact',          d:'Ask visitors to scan the QR — straight to WhatsApp, so today\u2019s conversation continues tomorrow.'},
-];
 
 
 function extraHTML(w){
@@ -408,7 +389,6 @@ function extraHTML(w){
     case 'chips': return `<div class="tags">${w.chips.map(c=>`<span>${c}</span>`).join('')}</div>`;
     case 'metric': return `<div class="metric"><b>${w.metric}</b><span>${w.mLabel}</span></div>`;
     case 'fw': return `<div class="fw-img"><img src="wow experience loop.png" alt="WOW Experience Loop framework"></div>`;
-    case 'cta': return `<button class="demo-btn" data-tour><i data-lucide="play"></i>Play booth tour</button>`;
     case 'qr': return `<div class="qr-wrap"><div class="qr-box" id="qrbox"></div>
         <p><b>WhatsApp us</b><br>Scan to chat — 0812-4901-7400</p></div>`;
     case 'tiers': return `<div class="tiers"><span>In-House Training</span><span class="hot">6-Mo</span><span>12-Mo</span><em>&larr; most popular</em></div>`;
@@ -423,8 +403,10 @@ function extraHTML(w){
 
 const stage  = document.getElementById('stage');
 const wrap   = document.getElementById('widgets');
-const guides = document.getElementById('guides');
-let scale = 1, zTop = 10;
+let scale = 1, zTop = 10, fxPref = true, calm = false;
+
+
+try{ const p = JSON.parse(localStorage.getItem('incentric-fx')); if(typeof p === 'boolean') fxPref = p; }catch(_){}
 
 
 WIDGETS.forEach((w,i)=>{
@@ -440,36 +422,11 @@ WIDGETS.forEach((w,i)=>{
       <span class="w-meta">${w.no} · ${w.tag}</span></div>
       <h3>${w.title}</h3><p>${w.short}</p>${extraHTML(w)}
     </div></div></div>`;
-  wrap.appendChild(el);
-});
-
-
-const store = {
-  load(){ try{ return JSON.parse(localStorage.getItem('incentric-booth')||'null'); }catch(_){ return null; } },
-  save(d){ try{ localStorage.setItem('incentric-booth', JSON.stringify(d)); }catch(_){} },
-  clear(){ try{ localStorage.removeItem('incentric-booth'); }catch(_){} }
-};
-let snapOn = true;
-let fxPref = true;
-let calm   = false;
-
-
-function persist(){
-  const pos = {};
-  WIDGETS.forEach(w=>{
-    const el = document.getElementById('w-'+w.id);
-    pos[w.id] = {x:el.offsetLeft, y:el.offsetTop};
+  el.addEventListener('click', ()=>{
+    if(!overlay.classList.contains('open')) openFor(w.id);
   });
-  store.save({pos, snap:snapOn, fx:fxPref});
-}
-
-
-const saved = store.load();
-if(saved && typeof saved.snap === 'boolean') snapOn = saved.snap;
-if(saved && typeof saved.fx   === 'boolean') fxPref  = saved.fx;
-if(saved && saved.pos) WIDGETS.forEach(w=>{
-  const p = saved.pos[w.id];
-  if(p){ const el = document.getElementById('w-'+w.id); el.style.left = p.x+'px'; el.style.top = p.y+'px'; }
+  el.addEventListener('keydown', e=>{ if(e.key==='Enter') openFor(w.id); });
+  wrap.appendChild(el);
 });
 
 
@@ -477,122 +434,7 @@ function fit(){
   scale = Math.min(innerWidth/1560, innerHeight/880);
   stage.style.transform = `scale(${scale})`;
 }
-fit(); addEventListener('resize', ()=>{ fit(); if(tourActive) placeStep(); });
-
-
-function stagePoint(e){
-  const r = stage.getBoundingClientRect();
-  return { x:(e.clientX-r.left)/scale, y:(e.clientY-r.top)/scale };
-}
-function alignSnap(x, y, data){
-  const TH = 12;
-  let bv = null, bh = null;
-  const myV = [x, x+data.w/2, x+data.w];
-  const myH = [y, y+data.h/2, y+data.h];
-  WIDGETS.forEach(o=>{
-    if(o.id === data.id) return;
-    const oEl = document.getElementById('w-'+o.id);
-    const ox = oEl.offsetLeft, oy = oEl.offsetTop;
-    [ox, ox+o.w/2, ox+o.w].forEach(b=>myV.forEach(a=>{
-      const d = b-a;
-      if(!bv || Math.abs(d) < Math.abs(bv.d)) bv = {d, line:b};
-    }));
-    [oy, oy+o.h/2, oy+o.h].forEach(b=>myH.forEach(a=>{
-      const d = b-a;
-      if(!bh || Math.abs(d) < Math.abs(bh.d)) bh = {d, line:b};
-    }));
-  });
-  const out = {x, y, v:null, h:null};
-  if(bv && Math.abs(bv.d) <= TH){ out.x = x+bv.d; out.v = bv.line; }
-  if(bh && Math.abs(bh.d) <= TH){ out.y = y+bh.d; out.h = bh.line; }
-  return out;
-}
-function drawGuides(v,h){
-  let s = '';
-  if(v != null) s += `<i class="v" style="left:${v}px"></i>`;
-  if(h != null) s += `<i class="h" style="top:${h}px"></i>`;
-  guides.innerHTML = s;
-}
-
-
-function bindDrag(el, data){
-  const rotEl = el.querySelector('.w-rot');
-  let pos = {x:el.offsetLeft, y:el.offsetTop}, off={x:0,y:0}, moved=false, lastX=0, rot=0, pid=null;
-  let specRaf=null, specX=0, specY=0;
-
-
-  el.addEventListener('pointerdown', e=>{
-    if(tourActive || overlay.classList.contains('open')) return;
-    if(e.target.closest('.demo-btn')) return;
-    e.preventDefault();
-    el.setPointerCapture(e.pointerId); pid=e.pointerId;
-    el.style.zIndex = ++zTop;
-    const p = stagePoint(e);
-    off = {x:p.x-pos.x, y:p.y-pos.y};
-    moved=false; lastX=e.clientX; rot=0;
-  });
-  el.addEventListener('pointermove', e=>{
-    if(pid===null){
-      const r = el.getBoundingClientRect();
-      specX = e.clientX-r.left; specY = e.clientY-r.top;
-      if(!specRaf) specRaf = requestAnimationFrame(()=>{
-        specRaf = null;
-        el.style.setProperty('--mx', specX+'px');
-        el.style.setProperty('--my', specY+'px');
-      });
-      return;
-    }
-    const p = stagePoint(e);
-    let nx = Math.min(Math.max(p.x-off.x, 10), 1560-data.w-10);
-    let ny = Math.min(Math.max(p.y-off.y, 100), 880-data.h-14);
-    if(!moved && Math.hypot(p.x-off.x-pos.x, p.y-off-y-pos.y)>6){ moved=true; el.classList.add('drag'); }
-    if(moved){
-      if(snapOn){
-        stage.classList.add('snap-drag');
-        nx = Math.round(nx/GRID)*GRID;
-        ny = Math.round(ny/GRID)*GRID;
-        const a = alignSnap(nx, ny, data);
-        nx = Math.min(Math.max(a.x, 10), 1560-data.w-10);
-        ny = Math.min(Math.max(a.y, 100), 880-data.h-14);
-        drawGuides(a.v, a.h);
-      } else {
-        drawGuides(null, null);
-      }
-      pos = {x:nx, y:ny};
-      el.style.left = nx+'px'; el.style.top = ny+'px';
-      const target = Math.max(-7, Math.min(7, (e.clientX-lastX)*0.55));
-      rot += (target-rot)*0.35; lastX = e.clientX;
-      rotEl.style.setProperty('--rot', rot.toFixed(2)+'deg');
-    }
-  });
-  const end = e=>{
-    if(pid===null) return;
-    try{ el.releasePointerCapture(pid); }catch(_){}
-    pid=null; el.classList.remove('drag');
-    stage.classList.remove('snap-drag');
-    drawGuides(null, null);
-    rotEl.style.removeProperty('--rot');
-    if(!moved) openFor(data.id); else persist();
-  };
-  el.addEventListener('pointerup', end);
-  el.addEventListener('pointercancel', end);
-  el.addEventListener('keydown', e=>{ if(e.key==='Enter') openFor(data.id); });
-}
-WIDGETS.forEach(w=>bindDrag(document.getElementById('w-'+w.id), w));
-
-
-const snapBtn   = document.getElementById('snapBtn');
-function applySnapUI(){
-  snapBtn.classList.toggle('on', snapOn);
-  snapBtn.setAttribute('aria-pressed', String(snapOn));
-}
-applySnapUI();
-snapBtn.addEventListener('click', ()=>{
-  snapOn = !snapOn;
-  applySnapUI();
-  persist();
-  toast(snapOn ? 'Snapping on — grid + alignment guides active.' : 'Snapping off — free positioning.', 'magnet');
-});
+fit(); addEventListener('resize', ()=>{ fit(); });
 
 
 const fxBtn   = document.getElementById('fxBtn');
@@ -612,7 +454,7 @@ fxBtn.addEventListener('click', ()=>{
   fxPref = !fxPref;
   setCalm(!fxPref);
   applyFxUI();
-  persist();
+  try{ localStorage.setItem('incentric-fx', JSON.stringify(fxPref)); }catch(_){}
   resetIdle();
   toast(fxPref ? 'Motion on — full experience.' : 'Motion off — calm mode, cooler laptop.', 'fan');
 });
@@ -694,15 +536,18 @@ const MODALS = {
     <div class="m-head"><span class="m-ic"><i data-lucide="mail"></i></span>
       <div><div class="m-eyebrow">05 · Contact</div><h2>Get in Touch</h2></div></div>
     <p class="m-lead">The conversation doesn't end at the booth. Reach us on WhatsApp or email — we reply fast.</p>
+    <div class="m-qr"><div class="qr-box" id="qrbox"></div><div class="m-qr-r">
+      <b>Scan to chat</b><p>WhatsApp opens straight to 0812-4901-7400.</p>
+      <a class="act" href="https://wa.me/6281249017400" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Chat now</a>
+    </div></div>
     <div class="m-sec">
-      <div class="m-row"><i data-lucide="message-circle"></i><div><b>0812-4901-7400</b><p>WhatsApp — the fastest way to talk to us.</p></div><a class="act" href="https://wa.me/6281249017400" target="_blank" rel="noopener"><i data-lucide="message-circle"></i>Chat</a></div>
+      <div class="m-row"><i data-lucide="message-circle"></i><div><b>0812-4901-7400</b><p>WhatsApp — the fastest way to talk to us.</p></div></div>
       <div class="m-row"><i data-lucide="mail"></i><div><b>incentric.id@gmail.com</b><p>Official email inbox — or use the site contact form.</p></div><button class="act" data-act="copy"><i data-lucide="copy"></i>Copy</button></div>
       <div class="m-row"><i data-lucide="map-pin"></i><div><b>Kavling Mekarsari, Jl. Raya Bamban No.28, Pakis</b><p>Malang, East Java — our head office.</p></div></div>
-      <div class="m-row"><i data-lucide="qr-code"></i><div><b>QR on the widget</b><p>Point a visitor's camera at the right-side widget — it opens WhatsApp directly.</p></div></div>
     </div>${mFoot()}`,
   event: () => `
     <div class="m-head"><span class="m-ic"><i data-lucide="calendar-clock"></i></span>
-      <div><div class="m-eyebrow">08 · Event</div><h2>Founder Class</h2></div></div>
+      <div><div class="m-eyebrow">04 · Event</div><h2>Founder Class</h2></div></div>
     <p class="m-lead">A special class at the booth — led by Incentric's founder himself.</p>
     <div class="m-sec">
       <div class="m-row"><i data-lucide="calendar-days"></i><div><b>5 September 2026 · 10:00–12:00</b><p>Two-hour session at JICC Jakarta.</p></div></div>
@@ -719,11 +564,17 @@ function mFoot(){
 }
 
 
+function genQR(box){
+  if(box && !box.childElementCount && window.QRCode){
+    new QRCode(box, {text: WA_URL, width: 128, height: 128,
+      colorDark:'#0A2470', colorLight:'#ffffff', correctLevel: QRCode.CorrectLevel.M});
+  }
+}
 function openFor(id){
-  if(id === 'tour'){ startTour(); return; }
   if(!MODALS[id]) return;
   modal.innerHTML = MODALS[id]();
   lucide.createIcons();
+  if(id === 'contact') genQR(modal.querySelector('#qrbox'));
   overlay.classList.add('open');
   modal.scrollTop = 0;
   modal.querySelector('.btn')?.focus();
@@ -733,7 +584,6 @@ function closeModal(){ overlay.classList.remove('open'); }
 
 document.addEventListener('click', e=>{
   if(e.target === overlay){ closeModal(); return; }
-  if(e.target.closest('[data-tour]')){ startTour(); return; }
   const actEl = e.target.closest('[data-act]');
   if(!actEl) return;
   const act = actEl.dataset.act;
@@ -753,66 +603,6 @@ document.addEventListener('click', e=>{
       .catch(()=>toast('Copy manually: incentric.id@gmail.com','mail'));
   }
 });
-
-
-const tourLayer = document.getElementById('tourLayer');
-const spot = document.getElementById('spot');
-const tourCard = document.getElementById('tourCard');
-let tourActive = false, tourIdx = 0;
-
-
-function startTour(){
-  if(tourActive) return;
-  closeModal();
-  tourActive = true; tourIdx = 0;
-  tourLayer.classList.add('active');
-  placeStep();
-}
-function placeStep(){
-  const s = TOUR[tourIdx];
-  const w = document.getElementById('w-'+s.id);
-  const x = w.offsetLeft-12, y = w.offsetTop-12, wd = w.offsetWidth+24, ht = w.offsetHeight+24;
-  spot.style.cssText = `left:${x}px;top:${y}px;width:${wd}px;height:${ht}px`;
-  const cardH = 190;
-  let cy = (y+ht+22+cardH < 880) ? y+ht+22 : y-22-cardH;
-  let cx = Math.min(Math.max(x+wd/2-167, 24), 1560-334-24);
-  tourCard.style.left = cx+'px';
-  tourCard.style.top  = cy+'px';
-  tourCard.classList.remove('in'); void tourCard.offsetWidth;
-  tourCard.innerHTML = `
-    <div class="t-eyebrow">Booth Tour — ${tourIdx+1} / ${TOUR.length}</div>
-    <h4>${s.t}</h4><p>${s.d}</p>
-    <div class="t-bar"><i style="width:${((tourIdx+1)/TOUR.length)*100}%"></i></div>
-    <div class="t-foot">
-      <button class="t-next" id="tNext">${tourIdx===TOUR.length-1?'Finish tour':'Next'}<i data-lucide="chevron-right"></i></button>
-      <button class="t-quit" id="tQuit" title="End tour"><i data-lucide="x"></i></button>
-    </div>`;
-  tourCard.classList.add('in');
-  lucide.createIcons();
-  document.getElementById('tNext').onclick = ()=>{
-    if(tourIdx < TOUR.length-1){ tourIdx++; placeStep(); }
-    else endTour(true);
-  };
-  document.getElementById('tQuit').onclick = ()=>endTour(false);
-}
-function endTour(done){
-  tourActive = false;
-  tourLayer.classList.remove('active');
-  toast(done ? 'Tour finished — now go wow them!' : 'Tour stopped.', done?'party-popper':'x');
-}
-document.getElementById('heroTour').onclick = startTour;
-
-
-document.getElementById('resetBtn').onclick = ()=>{
-  WIDGETS.forEach(w=>{
-    const el = document.getElementById('w-'+w.id);
-    el.style.transition = 'left .7s cubic-bezier(.2,1.3,.4,1), top .7s cubic-bezier(.2,1.3,.4,1)';
-    el.style.left = w.x+'px'; el.style.top = w.y+'px';
-    setTimeout(()=>{ el.style.transition=''; }, 750);
-  });
-  store.clear();
-  toast('Layout restored to default.','rotate-ccw');
-};
 
 
 const toasts = document.getElementById('toasts');
@@ -860,29 +650,75 @@ addEventListener('pointermove', e=>{
 
 
 addEventListener('keydown', e=>{
-  if(e.key === 'Escape'){
-    if(overlay.classList.contains('open')) closeModal();
-    else if(tourActive) endTour(false);
-    return;
-  }
-  if((e.key==='s'||e.key==='S') && !e.metaKey && !e.ctrlKey && !e.altKey
-     && !overlay.classList.contains('open') && !tourActive){
-    snapBtn.click();
-  }
+  if(e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
 });
 
 
 window.addEventListener('load', ()=>{
-  const box = document.getElementById('qrbox');
-  if(window.QRCode && box){
-    new QRCode(box, {text: WA_URL, width: 128, height: 128,
-      colorDark:'#0A2470', colorLight:'#ffffff', correctLevel: QRCode.CorrectLevel.M});
-  }
+  genQR(document.getElementById('qrbox'));
 });
 
 
 lucide.createIcons();
 if(innerWidth < 720) setTimeout(()=>toast('Best experienced on a large screen — designed for the booth monitor.','monitor'), 900);
+
+
+/* ---------- Lead capture (chat-style → Google Sheets via Apps Script) ---------- */
+const leadMsgs  = document.getElementById('leadMsgs');
+const leadInput = document.getElementById('leadInput');
+const leadSend  = document.getElementById('leadSend');
+
+function leadMsg(html, cls){
+  const d = document.createElement('div');
+  d.className = 'lp-msg ' + cls;
+  d.innerHTML = html;
+  leadMsgs.appendChild(d);
+  leadMsgs.scrollTop = leadMsgs.scrollHeight;
+}
+
+function guessField(note){
+  const n = note.toLowerCase();
+  const wa = (note.match(/(?:wa\s*[:.\-]?\s*)?(08\d{7,13}|628\d{7,13})/i) || [])[1];
+  const name = (n.match(/(?:saya|name|nama|aku)\s+([a-z][a-z ]{1,24})/i) || [])[1];
+  return {
+    name: name ? name.trim().split(/\s+/).slice(0,2).map(w=>w[0].toUpperCase()+w.slice(1)).join(' ') : '',
+    whatsapp: wa || '',
+  };
+}
+
+async function submitLead(){
+  const note = leadInput.value.trim();
+  if(!note) return;
+  leadMsg(note.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])), 'user');
+  leadInput.value = '';
+  leadSend.disabled = true;
+  const { name, whatsapp } = guessField(note);
+  const payload = JSON.stringify({ raw_note: note, name, whatsapp });
+  try{
+    if(SHEET_URL){
+      // Apps Script tidak handle CORS preflight: kirim text/plain + no-cors,
+      // Apps Script membaca via e.postData.contents. Respons tidak bisa dibaca
+      // (no-cors) -> anggap terkirim.
+      await fetch(SHEET_URL, { method:'POST', mode:'no-cors', body: payload });
+      leadMsg('Got it! <b>Thank you</b> — our team will follow up soon. 🙌', 'ok');
+    } else {
+      const r = await fetch('/api/leads', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: payload
+      });
+      if(!r.ok) throw new Error('bad status');
+      leadMsg('Got it! <b>Thank you</b> — our team will follow up soon. 🙌', 'ok');
+    }
+  }catch(_){
+    leadMsg('Sorry — couldn\u2019t save that. Please try again.', 'ok');
+  }finally{
+    leadSend.disabled = false;
+    leadInput.focus();
+  }
+}
+leadSend.onclick = submitLead;
+leadInput.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); submitLead(); } });
 </script>
 </body>
 </html>

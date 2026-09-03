@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Local data
+leads.db
+leads.db-shm
+leads.db-wal
+*.db
+*.db-shm
+*.db-wal
+
+# OS
+.DS_Store
